@@ -128,17 +128,32 @@ qwebirc.irc.Commands = new Class({
       
     this.send("MODE " + channel + " " + modes + " " + args.join(" "));
   },
+  cmd_PROTECT: [true, 6, 1, function(args) {
+    this.automode("+", "a", args);
+  }],
+  cmd_DEPROTECT: [true, 6, 1, function(args) {
+    this.automode("-", "a", args);
+  }],
   cmd_OP: [true, 6, 1, function(args) {
     this.automode("+", "o", args);
   }],
   cmd_DEOP: [true, 6, 1, function(args) {
     this.automode("-", "o", args);
   }],
+  cmd_HALFOP: [true, 6, 1, function(args) {
+    this.automode("+", "h", args);
+  }],
+  cmd_DEHALFOP: [true, 6, 1, function(args) {
+    this.automode("-", "h", args);
+  }],
   cmd_VOICE: [true, 6, 1, function(args) {
     this.automode("+", "v", args);
   }],
   cmd_DEVOICE: [true, 6, 1, function(args) {
     this.automode("-", "v", args);
+  }],
+  cmd_BAN: [true, 6, 1, function(args) {
+    this.automode("+", "b", args);
   }],
   cmd_TOPIC: [true, 1, 1, function(args) {
     this.send("TOPIC " + this.getActiveWindow().name + " :" + args[0]);
