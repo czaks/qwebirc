@@ -128,12 +128,12 @@ qwebirc.ui.MENU_ITEMS = function() {
     {
       text: "voice",
       fn: command("voice"),
-      predicate: compose(isOpped, invert(targetVoiced))
+      predicate: compose(isHalfOpped, invert(targetVoiced))
     },
     {
       text: "devoice",
       fn: command("devoice"),
-      predicate: compose(isOpped, targetVoiced)
+      predicate: compose(isHalfOpped, targetVoiced)
     }
   ];
 }();
