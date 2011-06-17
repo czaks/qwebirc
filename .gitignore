@@ -1,0 +1,10 @@
+*.pyc
+*.pid
+*.cache
+*~
+static/*.html
+static/js/qui-*.js
+static/css
+config.py
+.checked
+.compiled
