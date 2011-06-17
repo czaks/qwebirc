@@ -214,9 +214,12 @@ qwebirc.irc.IRCClient = new Class({
     /* we guarantee that +x is sent out before the joins */
     if(this.ui.uiOptions.USE_HIDDENHOST)
       this.exec("/UMODE +x");
+    
+    if(!this.ui.uiOptions.USE_HIDDENHOST)
+      this.exec("/UMODE -x");
       
     if(this.options.autojoin) {
-      if(qwebirc.auth.loggedin() && this.ui.uiOptions.USE_HIDDENHOST) {
+      if(qwebirc.auth.loggedin()) {
         var d = function() {
           if($defined(this.activeTimers.autojoin))
             this.ui.getActiveWindow().infoMessage("Waiting for login before joining channels...");

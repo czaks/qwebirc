@@ -31,12 +31,10 @@ qwebirc.config.DEFAULT_OPTIONS = [
   [2, "DEDICATED_MSG_WINDOW", "Send privmsgs to dedicated messages window", false],
   [4, "DEDICATED_NOTICE_WINDOW", "Send notices to dedicated message window", false],
   [3, "NICK_OV_STATUS", "Show status (@/+) before nicknames in channel lines", true],
-  [5, "ACCEPT_SERVICE_INVITES", "Automatically join channels when invited by Q", true, {
+  /*[5, "ACCEPT_SERVICE_INVITES", "Automatically join channels when invited by Q", true, {
     settableByURL: false
-  }],
-  [6, "USE_HIDDENHOST", "Hide your hostmask when authed to Q (+x)", true, {
-    settableByURL: false
-  }],
+  }],*/
+  [6, "USE_HIDDENHOST", "Hide your hostmask (+x)", true],
   [8, "LASTPOS_LINE", "Show a last position indicator for each window", true, {
     enabled: qwebirc.ui.supportsFocus
   }],
