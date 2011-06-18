@@ -24,6 +24,7 @@ qwebirc.irc.IRCClient = new Class({
     this.activeTimers = {};
     
     this.loginRegex = new RegExp(this.ui.options.loginRegex);
+    this.imageRegex = new RegExp("https?://[^ ]+\.(jpg|png|jpeg|gif)", "i");
     this.tracker = new qwebirc.irc.IRCTracker(this);
   },
   newLine: function(window, type, data) {
@@ -35,6 +36,17 @@ qwebirc.irc.IRCClient = new Class({
       w.addLine(type, data);
     } else {
       this.statusWindow.addLine(type, data);
+    }
+  },
+  newImage: function(window, image, data) {
+    if(!data)
+      data = {};
+    
+    var w = this.getWindow(window);
+    if(w) {
+      w.addImage(image, data);
+    } else {
+      this.statusWindow.addImage(image, data);
     }
   },
   newChanLine: function(channel, type, user, extra) {
@@ -52,6 +64,9 @@ qwebirc.irc.IRCClient = new Class({
       delete extra["@"];
       
     this.newLine(channel, type, extra);
+  },
+  newChanImage: function(channel, image, extra) {
+    this.newImage(channel, image, extra);
   },
   newServerLine: function(type, data) {
     this.statusWindow.addLine(type, data);
@@ -163,6 +178,24 @@ qwebirc.irc.IRCClient = new Class({
       } else {
         return this.newLine(window, type, data);
       }
+    }
+  },
+  newQueryImage: function(window, image, data, privmsg, active) {
+    if(this.getQueryWindow(window))
+      return this.newImage(window, image, data);
+      
+    var w = this.ui.getWindow(this, qwebirc.ui.WINDOW_MESSAGES);
+    
+    var e;
+    if(privmsg) {
+      e = this.ui.uiOptions.DEDICATED_MSG_WINDOW;
+    } else {
+      e = this.ui.uiOptions.DEDICATED_NOTICE_WINDOW;
+    }
+    if(e && w) {
+      return w.addImage(image, data);
+    } else {
+      return this.newImage(window, image, data);
     }
   },
   newQueryOrActiveLine: function(window, type, data, privmsg) {
@@ -405,7 +438,11 @@ qwebirc.irc.IRCClient = new Class({
   channelPrivmsg: function(user, channel, message) {
     var nick = user.hostToNick();
     
-    this.tracker.updateLastSpoke(nick, channel, new Date().getTime()); 
+    this.tracker.updateLastSpoke(nick, channel, new Date().getTime());
+    image = this.imageRegex.exec(message);
+    if (image) {
+      this.newChanImage(channel, image);
+    }
     this.newChanLine(channel, "CHANMSG", user, {"m": message, "@": this.getNickStatus(channel, nick)});
   },
   channelNotice: function(user, channel, message) {
@@ -416,6 +453,13 @@ qwebirc.irc.IRCClient = new Class({
     var host = user.hostToHost();
     this.newQueryWindow(nick, true);
     this.pushLastNick(nick);
+    
+    image = this.imageRegex.exec(message);
+
+    if (image) {
+      this.newQueryImage(nick, image, {}, true);
+    }
+    
     this.newQueryLine(nick, "PRIVMSG", {"m": message, "h": host, "n": nick}, true);
 
     this.checkLogin(user, message);

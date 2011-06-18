@@ -95,6 +95,21 @@ qwebirc.ui.Window = new Class({
       this.scrollpos = this.lines.getScroll();
     }
   },
+  addImage: function(image, line, element) {
+    image = "http://images.6irc.pl/" + image[0]
+    
+    var anchor = document.createElement("a");
+    anchor.href = image;
+    anchor.target = "_blank";
+    var img = document.createElement("img");
+    img.src = image;
+    img.alt = "";
+    
+    anchor.appendChild(img);
+    element.appendChild(anchor);
+    
+    this.scrollAdd(element);
+  },
   addLine: function(type, line, colour, element) {
     var hilight = qwebirc.ui.HILIGHT_NONE;
     var lhilight = false;

@@ -302,3 +302,17 @@ div#noscript {
   margin-left: 3em;
   margin-right: 3em;
 }
+
+.qwebirc-qui div.imagediv img {
+  width: 100%;
+  border: none;
+}
+
+.qwebirc-qui div.imagediv {
+  max-width: 200px;
+  float: right;
+  clear: right;
+  border: 1px dashed $(nicklist_border);
+  padding: 3px;
+  margin: 3px;
+}

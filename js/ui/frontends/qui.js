@@ -636,6 +636,11 @@ qwebirc.ui.QUI.Window = new Class({
 
     this.parent(type, line, colourClass, e);
   },
+  addImage: function(image, line) {
+    var e = new Element("div");
+    e.addClass("imagediv");
+    this.parent(image, line, e);
+  },
   setHilighted: function(state) {
     var laststate = this.hilighted;
     
