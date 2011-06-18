@@ -439,9 +439,13 @@ qwebirc.irc.IRCClient = new Class({
     var nick = user.hostToNick();
     
     this.tracker.updateLastSpoke(nick, channel, new Date().getTime());
-    image = this.imageRegex.exec(message);
-    if (image) {
-      this.newChanImage(channel, image);
+    
+    if (this.parentObject.uiOptions.SHOW_IMAGES) {
+      image = this.imageRegex.exec(message);
+      
+      if (image) {
+	this.newChanImage(channel, image);
+      }
     }
     this.newChanLine(channel, "CHANMSG", user, {"m": message, "@": this.getNickStatus(channel, nick)});
   },
@@ -454,10 +458,12 @@ qwebirc.irc.IRCClient = new Class({
     this.newQueryWindow(nick, true);
     this.pushLastNick(nick);
     
-    image = this.imageRegex.exec(message);
+    if (this.parentObject.uiOptions.SHOW_IMAGES) {
+      image = this.imageRegex.exec(message);
 
-    if (image) {
-      this.newQueryImage(nick, image, {}, true);
+      if (image) {
+	this.newQueryImage(nick, image, {}, true);
+      }
     }
     
     this.newQueryLine(nick, "PRIVMSG", {"m": message, "h": host, "n": nick}, true);

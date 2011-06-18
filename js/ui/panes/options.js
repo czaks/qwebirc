@@ -49,7 +49,9 @@ qwebirc.config.DEFAULT_OPTIONS = [
   }],
   [12, "QUERY_ON_NICK_CLICK", "Query on nickname click in channel", false],
   [13, "SHOW_NICKLIST", "Show nickname list in channels", true],
-  [14, "SHOW_TIMESTAMPS", "Show timestamps", true] /* we rely on the hue update */
+  [14, "SHOW_TIMESTAMPS", "Show timestamps", true], /* we rely on the hue update */
+  
+  [60, "SHOW_IMAGES", "Display thumbnails of posted images", false]
 ];
 
 qwebirc.config.DefaultOptions = null;
